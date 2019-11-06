@@ -1,0 +1,51 @@
+FROM arm32v7/ros:melodic-perception
+SHELL ["/bin/bash","-c"]
+
+ENV ROS_DISTRO melodic
+RUN apt-get update && apt-get install -y sudo python-pip \
+    libasound2-dev \
+    portaudio19-dev \
+    python-numpy \
+    python-scipy \
+    ros-${ROS_DISTRO}-tf \
+    ros-${ROS_DISTRO}-tf-conversions \
+    ros-${ROS_DISTRO}-pcl-ros \
+    ros-${ROS_DISTRO}-stage-ros \
+    ros-${ROS_DISTRO}-teleop-twist-joy \
+    ros-${ROS_DISTRO}-joy
+
+RUN pip install simple_pid \
+    Adafruit_GPIO \
+    pyaudio
+
+
+# Create a new user
+ENV USER developer
+RUN useradd -m -d /home/${USER} ${USER} -p "" && \
+    chown -R ${USER} /home/${USER} /root/ && adduser ${USER} sudo && \
+    adduser ${USER} audio
+USER ${USER}
+
+RUN sudo rm /etc/ros/rosdep/sources.list.d/20-default.list && \
+    sudo rosdep init && rosdep update && \
+    echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> /home/${USER}/.bashrc && \
+    source /home/${USER}/.bashrc
+
+
+# Install FFTW3
+ENV FFTW_VERSION 3.3.8
+RUN cd /home/${USER} && \
+    wget http://fftw.org/fftw-${FFTW_VERSION}.tar.gz  && \
+    tar -xzvf fftw-${FFTW_VERSION}.tar.gz  && \
+    cd fftw-${FFTW_VERSION}  && \
+    ./configure  && \
+    make clean && make && sudo make install && \
+    cd cd /home/${USER}
+
+
+# CMD ["bash"]
+# COPY --chown=1000 ./entrypoint.sh /home/${USER}/entrypoint.sh
+# Set excutable permission to the file
+# RUN chmod +x /home/${USER}/entrypoint.sh
+# CMD ["/bin/bash", "-c", "/home/${USER}/entrypoint.sh", "&& /bin/bash" ]
+

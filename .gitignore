@@ -1,0 +1,54 @@
+*.ipynb_checkpoints/
+*.tmp
+*.pth
+*.pkl
+*.h5
+*.caffemodel
+*.bag
+*.pcd
+*.pyc
+*.swp
+*.swo
+*.vscode
+*.log
+*.zip
+*.tar
+*.csv
+*.pyc
+
+# ROS related
+build/
+devel/
+models/
+.catkin_workspace
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+doc/

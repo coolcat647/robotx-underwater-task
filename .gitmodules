@@ -1,0 +1,3 @@
+[submodule "catkin_ws/src/underwater_acoustics"]
+	path = catkin_ws/src/underwater_acoustics
+	url = https://github.com/coolcat647/underwater_acoustics
