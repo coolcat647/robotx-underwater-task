@@ -2,7 +2,7 @@ FROM arm32v7/ros:melodic-perception
 SHELL ["/bin/bash","-c"]
 
 ENV ROS_DISTRO melodic
-RUN apt-get update && apt-get install -y sudo python-pip \
+RUN apt-get update && apt-get install -y sudo python-pip wget \
     libasound2-dev \
     portaudio19-dev \
     python-numpy \
@@ -39,8 +39,8 @@ RUN cd /home/${USER} && \
     tar -xzvf fftw-${FFTW_VERSION}.tar.gz  && \
     cd fftw-${FFTW_VERSION}  && \
     ./configure  && \
-    make clean && make && sudo make install && \
-    cd cd /home/${USER}
+    make clean && make && sudo make install
+WORKDIR /home/${USER}
 
 
 # CMD ["bash"]
