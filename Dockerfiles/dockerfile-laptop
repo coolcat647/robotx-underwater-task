@@ -26,16 +26,6 @@ RUN cd /root/ && \
     make clean && make && sudo make install && \
     cd /root/ && rm fftw-${FFTW_VERSION}.tar.gz
 
-# Create a new user
 ENV USER developer
-# RUN useradd -m -d /home/${USER} ${USER} -p "" && \
-#     chown -R ${USER} /home/${USER} /root/ && adduser ${USER} sudo && \
-#     adduser ${USER} audio
 USER ${USER}
-
-# RUN sudo rm /etc/ros/rosdep/sources.list.d/20-default.list && \
-#     sudo rosdep init && rosdep update && \
-#     echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> /home/${USER}/.bashrc && \
-#     /bin/sh -c "~/.bashrc"
-
 WORKDIR /home/${USER}

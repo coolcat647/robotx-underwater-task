@@ -41,7 +41,7 @@ else
                 -v "/etc/localtime:/etc/localtime:ro" \
                 --device /dev/snd \
                 --group-add "audio" \
-                -v ${HOME}/code/robotx-underwater-task:/home/developer/robotx-underwater-task \
+                -v $(pwd):/home/developer/robotx-underwater-task \
                 -w /home/developer/robotx-underwater-task \
                 coolcat647/robotx-underwater:laptop
 fi
