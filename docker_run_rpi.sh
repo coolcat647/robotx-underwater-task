@@ -10,8 +10,10 @@ else
                 --device /dev/snd \
                 --device /dev/mem \
                 --device /dev/gpiomem \
+                --group-add "audio" \
                 --group-add $(cut -d: -f3 < <(getent group gpio)) \
                 --user "developer":$(id -g) \
                 -v ${HOME}/robotx-underwater-task:/home/developer/robotx-underwater-task \
+                -w /home/developer/robotx-underwater-task \
                 coolcat647/robotx-underwater:rpi
 fi

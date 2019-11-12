@@ -1,0 +1,41 @@
+FROM osrf/vrx:current
+
+USER ${ROOT}
+ENV ROS_DISTRO melodic
+RUN apt-get update && apt-get install -y sudo python-pip wget \
+    alsa \
+    libasound2-dev \
+    portaudio19-dev \
+    python-numpy \
+    python-scipy \
+    vim \
+    ros-${ROS_DISTRO}-teleop-twist-joy \
+    ros-${ROS_DISTRO}-joy
+
+RUN pip install simple_pid \
+    pyaudio \
+    pyqtgraph
+
+# Install FFTW3
+ENV FFTW_VERSION 3.3.8
+RUN cd /root/ && \
+    wget http://fftw.org/fftw-${FFTW_VERSION}.tar.gz  && \
+    tar -xzvf fftw-${FFTW_VERSION}.tar.gz  && \
+    cd fftw-${FFTW_VERSION}  && \
+    ./configure  && \
+    make clean && make && sudo make install && \
+    cd /root/ && rm fftw-${FFTW_VERSION}.tar.gz
+
+# Create a new user
+ENV USER developer
+# RUN useradd -m -d /home/${USER} ${USER} -p "" && \
+#     chown -R ${USER} /home/${USER} /root/ && adduser ${USER} sudo && \
+#     adduser ${USER} audio
+USER ${USER}
+
+# RUN sudo rm /etc/ros/rosdep/sources.list.d/20-default.list && \
+#     sudo rosdep init && rosdep update && \
+#     echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> /home/${USER}/.bashrc && \
+#     /bin/sh -c "~/.bashrc"
+
+WORKDIR /home/${USER}
