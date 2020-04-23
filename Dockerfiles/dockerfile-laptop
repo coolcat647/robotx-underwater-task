@@ -10,11 +10,15 @@ RUN apt-get update && apt-get install -y sudo python-pip wget \
     python-scipy \
     vim \
     ros-${ROS_DISTRO}-teleop-twist-joy \
-    ros-${ROS_DISTRO}-joy
+    ros-${ROS_DISTRO}-joy \
+    ros-${ROS_DISTRO}-image-transport \
+    ros-${ROS_DISTRO}-image-transport-plugins
 
 RUN pip install simple_pid \
     pyaudio \
-    pyqtgraph
+    pyqtgraph \
+    sympy \
+    scipy 
 
 # Install FFTW3
 ENV FFTW_VERSION 3.3.8
